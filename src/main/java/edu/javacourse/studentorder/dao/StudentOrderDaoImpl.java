@@ -61,10 +61,7 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
                     "where student_order_status = ? order by so.student_order_id LIMIT ?";
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                Config.getProperty(Config.DB_URL),
-                Config.getProperty(Config.DB_LOGIN),
-                Config.getProperty(Config.DB_PASSWORD));
+        return ConnectionBuilder.getConnection();
     }
     
     @Override

@@ -24,10 +24,7 @@ public class DictionaryDaoImpl implements DictionaryDao{
 
     //TODO refactoring - make one method
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                Config.getProperty(Config.DB_URL),
-                Config.getProperty(Config.DB_LOGIN),
-                Config.getProperty(Config.DB_PASSWORD));
+        return ConnectionBuilder.getConnection();
 
     }
 
