@@ -1,28 +1,23 @@
 package edu.javacourse.studentorder.dao;
 
 
-import edu.javacourse.studentorder.domain.*;
+import edu.javacourse.studentorder.domain.CountryArea;
+import edu.javacourse.studentorder.domain.PassportOffice;
+import edu.javacourse.studentorder.domain.RegisterOffice;
+import edu.javacourse.studentorder.domain.Street;
 import edu.javacourse.studentorder.exception.DaoException;
-import org.checkerframework.checker.units.qual.A;
-import org.junit.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DictionaryDaoImplTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(DictionaryDaoImplTest.class);
+    private static final Logger logger = LogManager.getLogger(DictionaryDaoImplTest.class);
 
 
 
@@ -37,7 +32,11 @@ public class DictionaryDaoImplTest {
     public void testStreet() throws DaoException {
         LocalDateTime dt1 = LocalDateTime.now();
         LocalDateTime dt2 = LocalDateTime.now();
-        logger.info("TEST {} {}",dt1,dt2);
+        logger.info("TEST {} {}", dt1, dt2);
+
+
+
+
         List<Street> d = new DictionaryDaoImpl().findStreets("про");
         Assert.assertTrue(d.size() == 2);
     }

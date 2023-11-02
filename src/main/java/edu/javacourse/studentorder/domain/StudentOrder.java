@@ -97,4 +97,19 @@ public class StudentOrder {
     public List<Child> getChildren() {
         return children;
     }
+
+    @Override
+    public String toString() {
+        return "StudentOrder{" +
+                "studentOrderId=" + studentOrderId +
+                ", studentOrderDate=" + studentOrderDate +
+                ", studentOrderStatus=" + studentOrderStatus +
+                ", husband=" + husband +
+                ", wife=" + wife +
+                ", children=" + children +
+                ", marriageCertificateId='" + marriageCertificateId + '\'' +
+                ", marriageOffice=" + marriageOffice +
+                ", marriageDate=" + marriageDate +
+                '}';
+    }
 }

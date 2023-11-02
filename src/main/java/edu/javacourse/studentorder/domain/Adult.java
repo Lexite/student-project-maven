@@ -67,4 +67,16 @@ public class Adult extends Person{
     public void setIssueDepartment(PassportOffice issueDepartment) {
         this.issueDepartment = issueDepartment;
     }
+
+    @Override
+    public String toString() {
+        return "Adult{" +
+                "passportSeria='" + passportSeria + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", issueDate=" + issueDate +
+                ", issueDepartment=" + issueDepartment +
+                ", university=" + university +
+                ", studentId='" + studentId + '\'' +
+                "} " + super.toString();
+    }
 }

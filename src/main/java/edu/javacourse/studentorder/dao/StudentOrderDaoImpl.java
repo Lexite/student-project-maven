@@ -1,7 +1,9 @@
 package edu.javacourse.studentorder.dao;
+
 import edu.javacourse.studentorder.config.Config;
 import edu.javacourse.studentorder.domain.*;
 import edu.javacourse.studentorder.exception.DaoException;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,9 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import static edu.javacourse.studentorder.config.Config.DB_LIMIT;
 
 public class StudentOrderDaoImpl implements StudentOrderDao {
+
+    private static final Logger logger = LogManager.getLogger(StudentOrderDaoImpl.class);
+
+
     private static final String INSERT_ORDER =
             "insert into jc_student_order ( student_order_status, student_order_date, h_sur_name, h_given_name," +
                     "                              h_patronymic, h_date_of_birth, h_passport_seria, h_passport_number, h_passport_date," +
@@ -22,13 +31,11 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
                     "                              w_passport_number, w_passport_date, w_passport_office_id, w_post_index, w_street_code," +
                     "                              w_building, w_extension, w_apartment, w_university_id, w_student_number, certificate_id, register_office_id, marriage_date)" +
                     "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-
     private static final String INSERT_CHILD =
             "insert into jc_student_child (student_order_id, c_sur_name, c_given_name, c_patronymic," +
             "                              c_date_of_birth, c_certificate_number, c_certificate_date, c_register_office_id," +
             "                              c_post_index, c_street_code, c_building, c_extension, c_apartment)" +
             "values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
-
     private static final String SELECT_ORDERS =
             "select  ro.r_office_area_id, r_office_name, so.*, " +
                     "po_h.p_office_area_id as h_p_office_area_id, po_h.p_office_name as h_p_office_name," +
@@ -38,13 +45,11 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
                     "inner join jc_passport_office po_h on so.h_passport_office_id = po_h.p_office_id " +
                     "inner join jc_passport_office po_w on so.w_passport_office_id = po_w.p_office_id " +
                     "where student_order_status = ? order by student_order_date LIMIT ?";
-
     private static final String SELECT_CHILD =
             "select soc.*, ro.r_office_area_id, r_office_name " +
                     "from jc_student_child soc " +
                     "inner join jc_register_office ro ON soc.c_register_office_id = ro.r_office_id " +
                     "where soc.student_order_id in ";
-
     private static final String SELECT_ORDERS_FULL =
                     "select  so.*, ro.r_office_area_id, ro.r_office_name, " +
                     "po_h.p_office_area_id as h_p_office_area_id, " +
@@ -66,7 +71,12 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
     
     @Override
     public Long saveStudentOrder(StudentOrder so) throws DaoException {
+
         Long result = -1L;
+
+        logger.debug("SO {}" , so);
+
+
         try (Connection con = getConnection()) {
             PreparedStatement stmt = con.prepareStatement(INSERT_ORDER, new String[] {"student_order_id"});
 
@@ -106,6 +116,7 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
 
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
         return result;
@@ -201,6 +212,7 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
             rs.close();
         }
         catch (SQLException ex){
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
 
         }
@@ -232,6 +244,8 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
             rs.close();
         }
         catch (SQLException ex){
+            logger.error(ex.getMessage(), ex);
+
             throw new DaoException(ex);
 
         }

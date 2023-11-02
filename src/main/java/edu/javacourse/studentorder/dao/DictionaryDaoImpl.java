@@ -1,18 +1,30 @@
 package edu.javacourse.studentorder.dao;
 
-import edu.javacourse.studentorder.config.Config;
 import edu.javacourse.studentorder.domain.CountryArea;
 import edu.javacourse.studentorder.domain.PassportOffice;
 import edu.javacourse.studentorder.domain.RegisterOffice;
 import edu.javacourse.studentorder.domain.Street;
 import edu.javacourse.studentorder.exception.DaoException;
 
-import javax.swing.plaf.nimbus.State;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 public class DictionaryDaoImpl implements DictionaryDao{
+
+    private static final Logger logger = LogManager.getLogger(DictionaryDaoImpl.class);
+
+
+
+
+
     private static final String GET_STREET = "SELECT street_code, street_name " +
             "FROM jc_street WHERE UPPER(street_name) LIKE UPPER (?)";
     private static final String GET_PASSPORT = "SELECT * " +
@@ -22,7 +34,6 @@ public class DictionaryDaoImpl implements DictionaryDao{
     private static final String GET_AREA = "SELECT * " +
             "FROM jc_country_struct WHERE area_id like ? and area_id <> ?";
 
-    //TODO refactoring - make one method
     private Connection getConnection() throws SQLException {
         return ConnectionBuilder.getConnection();
 
@@ -45,6 +56,7 @@ public class DictionaryDaoImpl implements DictionaryDao{
                 }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
         return result;
@@ -72,6 +84,8 @@ public class DictionaryDaoImpl implements DictionaryDao{
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+
             throw new DaoException(ex);
         }
         return result;
@@ -99,6 +113,8 @@ public class DictionaryDaoImpl implements DictionaryDao{
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+
             throw new DaoException(ex);
         }
         return result;
@@ -130,6 +146,8 @@ public class DictionaryDaoImpl implements DictionaryDao{
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
+
             throw new DaoException(ex);
         }
         return result;

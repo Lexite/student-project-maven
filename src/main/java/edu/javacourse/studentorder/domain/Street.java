@@ -30,4 +30,12 @@ public class Street {
     public void setStreetCode(Long streetCode) {
         this.streetCode = streetCode;
     }
+
+    @Override
+    public String toString() {
+        return "Street{" +
+                "streetCode=" + streetCode +
+                ", streetName='" + streetName + '\'' +
+                '}';
+    }
 }
